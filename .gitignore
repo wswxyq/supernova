@@ -1,0 +1,5 @@
+**/*.pdf
+**/*.npz
+**/*.csv
+**/*.pth
+# pth files contains pytorch models
