@@ -11,9 +11,12 @@ from os.path import isfile, join
 z_size = 896
 xy_size = 384
 
+
+
 def image_gen(event):
     """
     generate npy from event
+
     """
     #print(event)
     imgxz=np.zeros((z_size, xy_size), dtype=int)
@@ -21,10 +24,13 @@ def image_gen(event):
 
     for i in range(event.shape[0]):
         if event[i,0]%2 == 0:
+            #print(event[i, 0], event[i, 1])
             imgxz[event[i, 0], event[i, 1]] = event[i, 3]
+
         else:
+            #print(event[i, 0], event[i, 1])
             imgyz[event[i, 0], event[i, 1]] = event[i, 3]
-    return imgxz, imgyz, event[:, 4].max()
+    return imgxz, imgyz
 
 
 def npygen(filename):

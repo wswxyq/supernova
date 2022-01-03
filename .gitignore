@@ -2,4 +2,8 @@
 **/*.npz
 **/*.csv
 **/*.pth
+**/*.txt
+**__pycache__
+**xz
+event2
 # pth files contains pytorch models
