@@ -18,7 +18,10 @@ def createDataSet(eventfile:str, num_slices:int, SaveDir:str, num_cluster:int=-1
             temp=slc.slice_base(events.select(i))
             if temp.both==1:
                 #print(i)
-                slice_lst.append(slc.slice_image(events.select(i)))
+                temp_=slc.slice_image(events.select(i))
+                temp_.crop()
+                temp_.resize()
+                slice_lst.append(temp_)
 
     cluster_lst=[] # list of clusters with xz and yz planes
     for i in ids:
