@@ -24,6 +24,7 @@ class quick_select_id:
                 _id=self.events[i,-1] # update the id to the current id
                 _begin=i # update the begin to the current index
         self.idmap[_id]=[_begin, _end+1] # add 1 to the end of the last index because the last index is exclusive.
+        self.ids=list(self.idmap.keys()) # get all ids
 
     def select(self, n):
         return self.events[self.idmap[n][0]:self.idmap[n][1],:] # return the indexes of the id

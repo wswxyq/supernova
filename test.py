@@ -1,46 +1,26 @@
 # %%
-import numpy as np
-import sys
-sys.path.append('D:/supernova/utils')
-import utils.select_id as select_id
-import utils.cluster as clst
-import utils.slice as slc
-testfile = 'event/890.txt'
-events=select_id.quick_select_id(testfile)
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import model.testmodel as testmodel
+import utils.myDataLoader as myDataLoader
 
 # %%
-b=clst.xyz_cluster(events.select(-1))
-# %%
-ids=events.idmap.keys()
-slice_lst=[]
-for i in ids:
-    if i>0:
-        print(i)
-        slice_lst.append(slc.slice_image(events.select(i)))
-# %%
-b.get_close_slice_num(slice_lst))
-
+numClusterFeature = 21
+numSlice = 4
+numSliceFeature = 20
 
 # %%
-temp=[]
-for i in ids:
-    if i<0:
-        #print(i)
-        event=events.select(i)
-        b=clst.cluster_info(events.select(i))
-        if b.both==1:
-            temp.append(i)
-# %%
-len(ids)
-# %%
-len(ids)
-# %%
-len(temp)
-# %%
+myDataLoader.createDataSet(eventfile='event/865.txt', num_slices=numSlice, SaveDir='output', num_cluster=10)
 
 # %%
-slc.slice_image(events.select(91))# %%
-
+model=testmodel.ClassifierModel(numClusterFeature, numSlice, numSliceFeature)
 # %%
-events.select(91)
+torch.onnx.export(model, 
+            (torch.randn(1, numSlice*4, 50, 50), 
+                torch.randn(1, numClusterFeature), 
+                torch.randn(1, numSliceFeature*numSlice)), 
+            'model/testmodel.onnx',
+            input_names = ['Slice IMGs', 'Cluster info', 'Slice info'],   # the model's input names
+            output_names = ['output'],)
 # %%

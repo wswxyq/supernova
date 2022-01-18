@@ -6,4 +6,5 @@
 **__pycache__
 **xz
 event2
+*.onnx
 # pth files contains pytorch models

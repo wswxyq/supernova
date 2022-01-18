@@ -37,8 +37,8 @@ class slice_base:
 
 class slice_image(slice_base):
     """
-    This class requires that the slice contains both xz and yz part.
-    [ A class that contains the event data and processes it. ]
+    [This class requires that the slice contains both xz and yz part.]
+    A class that contains the event data and processes it.
     Event columns:(notes from Matt)
     0) Plane number (z position)
     1) Cell number (x or y position depending on even or odd plane)

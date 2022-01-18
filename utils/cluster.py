@@ -6,7 +6,7 @@ class cluster_info:
     This class will contains information of a candidate cluster.
     Note that a cluster has much less hits than a slice.
     Usually it has around 2 hits.
-    XZ, YZ parts can be empty. 
+    XZ, YZ parts can be empty.
     '''
     def __init__(self, event):
         self.event = event # read event
@@ -28,6 +28,10 @@ class cluster_info:
         self.std_time = np.std(self.event[:,2]) # standard deviation of time
         self.maxtime = np.max(self.event[:,2]) # maximum time
         self.mintime = np.min(self.event[:,2]) # minimum time
+        self.close_slice_list=[]
+
+        # is this a supernova neutrino hits cluster?
+        self.is_supernova = ( np.sum(self.event[:,4])/self.numhit >= 0.5 )
 
 class xyz_cluster(cluster_info):
     '''
@@ -60,6 +64,9 @@ class xyz_cluster(cluster_info):
         for i in range(len(slices_list)):
             if cuts.space_cut(slices_list[i], self):
                 self.close_slice_num += 1
-
+                # save the minimum difference of this slice's hits time to this cluster's average time
+                self.close_slice_list.append([i, np.min(np.abs( slices_list[i].event[:,2]-self.avg_time))])
+        self.close_slice_list=np.array(self.close_slice_list, dtype=np.int)
+        self.close_slice_list=self.close_slice_list[self.close_slice_list[:,-1].argsort()]
         
  
