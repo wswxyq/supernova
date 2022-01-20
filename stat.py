@@ -34,6 +34,7 @@ for i in ids:
 num=[]
 for j in xyzclusterlst:
     if j<0:
+        print(j)
         b=clst.xyz_cluster(events.select(j))
         b.get_close_slice_num(slice_lst)
         print(j, b.close_slice_num)

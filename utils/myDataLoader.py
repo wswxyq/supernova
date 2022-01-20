@@ -94,6 +94,6 @@ def createDataSet(eventfile:str, num_slices:int, SaveDir:str, num_cluster:int=-1
             slice_features=np.array(slice_features)
             Sliceimg=np.concatenate(Sliceimg, axis=0)
             np.savez(os.path.join(SaveDir, str( uuid.uuid4() ) ), Slice_img=Sliceimg, 
-                    Cluster_info=cluster_features, Slice_info=slice_features)
+                    Cluster_info=cluster_features, Slice_info=slice_features, supernova=x.supernova)
  
 

@@ -66,7 +66,8 @@ class xyz_cluster(cluster_info):
                 self.close_slice_num += 1
                 # save the minimum difference of this slice's hits time to this cluster's average time
                 self.close_slice_list.append([i, np.min(np.abs( slices_list[i].event[:,2]-self.avg_time))])
-        self.close_slice_list=np.array(self.close_slice_list, dtype=np.int)
-        self.close_slice_list=self.close_slice_list[self.close_slice_list[:,-1].argsort()]
+        if self.close_slice_list!=[]:
+            self.close_slice_list=np.array(self.close_slice_list, dtype=np.int)
+            self.close_slice_list=self.close_slice_list[self.close_slice_list[:,-1].argsort()]
         
  

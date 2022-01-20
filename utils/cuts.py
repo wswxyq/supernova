@@ -3,6 +3,10 @@ import slice as slice
 import cluster as cluster
 
 def space_cut(slice_obj: slice.slice_image, cluster_obj:cluster.cluster_info):
+    # As suggested by Greg, we add a causality cut.
+    # Allow a 100 ns uncertainty of time.
+    if slice_obj.maxtime- 100 > cluster_obj.mintime:
+        return False
     # the NOvA detector cell is 6cm deep in z direction, and 3.9cm wide in x and y direction.
     # If any of the hits in clusters are within the given distance to end of slice, return True.
     xydis=50
