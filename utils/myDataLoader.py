@@ -13,7 +13,7 @@ def createDataSet(eventfile:str, num_slices:int, SaveDir:str, num_cluster:int=-1
     ids=events.ids # get all ids
 
     slice_lst=[] # list of slices with xz and yz planes
-    for i in ids:
+    for i in ids: 
         if i>0:
             temp=slc.slice_base(events.select(i))
             if temp.both==1:
@@ -23,21 +23,38 @@ def createDataSet(eventfile:str, num_slices:int, SaveDir:str, num_cluster:int=-1
                 temp_.resize()
                 slice_lst.append(temp_)
 
+    #print(len(slice_lst))
+
     cluster_lst=[] # list of clusters with xz and yz planes
+    # I will create a balanced dataset
+    cluster_supernova_lst=[] # list of supernova clusters 
+    cluster_no_supernova_lst=[] # list of no supernova clusters
+
     for i in ids:
         if i<0:
             temp=clst.cluster_info(events.select(i))
             if temp.both==1:
                 #print(i)
-                cluster_lst.append(clst.xyz_cluster(events.select(i)))
+                _temp=clst.xyz_cluster(events.select(i))
+                if _temp.is_supernova==1:
+                    cluster_supernova_lst.append(_temp)
+                else:
+                    cluster_no_supernova_lst.append(_temp)
 
-    loop_cluster_lst=cluster_lst
-    if num_cluster!=-1 and num_cluster<=len(cluster_lst):
-        loop_cluster_lst=random.sample(cluster_lst, num_cluster)
-    elif num_cluster>len(cluster_lst):
+    #print(len(cluster_lst))
+
+    loop_cluster_lst=cluster_supernova_lst
+    if num_cluster!=-1 and num_cluster<=len(cluster_supernova_lst):
+        loop_cluster_lst=random.sample(cluster_supernova_lst, num_cluster)
+    elif num_cluster>len(cluster_supernova_lst):
         print('Warning: num_cluster is larger than the number of clusters in the event file. \n\
                 Set num_cluster to -1 to use all clusters. \n\
                 Setting num_cluster = len(cluster_lst) now.')
+    if len(loop_cluster_lst)<len(cluster_no_supernova_lst):
+        cluster_no_supernova_lst=random.sample(cluster_no_supernova_lst, len(loop_cluster_lst))
+    loop_cluster_lst+=cluster_no_supernova_lst
+
+    #print((loop_cluster_lst))
 
     for x in loop_cluster_lst:
         x.get_close_slice_num(slice_lst)
@@ -93,7 +110,8 @@ def createDataSet(eventfile:str, num_slices:int, SaveDir:str, num_cluster:int=-1
             cluster_features=np.array(cluster_features)
             slice_features=np.array(slice_features)
             Sliceimg=np.concatenate(Sliceimg, axis=0)
+            #print(x.is_supernova)
             np.savez(os.path.join(SaveDir, str( uuid.uuid4() ) ), Slice_img=Sliceimg, 
-                    Cluster_info=cluster_features, Slice_info=slice_features, supernova=x.supernova)
+                    Cluster_info=cluster_features, Slice_info=slice_features, supernova=x.is_supernova)
  
 

@@ -5,6 +5,6 @@
 **/*.txt
 **__pycache__
 **xz
-event2
 *.onnx
+output/**
 # pth files contains pytorch models

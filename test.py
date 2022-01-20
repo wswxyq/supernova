@@ -4,14 +4,16 @@ import torch.nn as nn
 import torch.nn.functional as F
 import model.testmodel as testmodel
 import utils.myDataLoader as myDataLoader
-
+import os
 # %%
 numClusterFeature = 21
 numSlice = 4
 numSliceFeature = 20
 
 # %%
-myDataLoader.createDataSet(eventfile='event/865.txt', num_slices=numSlice, SaveDir='output', num_cluster=10)
+savedir='output/865/'
+os.makedirs(savedir, exist_ok=True)
+myDataLoader.createDataSet(eventfile='event/865.txt', num_slices=numSlice, SaveDir=savedir, num_cluster=10)
 
 # %%
 model=testmodel.ClassifierModel(numClusterFeature, numSlice, numSliceFeature)
