@@ -25,4 +25,3 @@ torch.onnx.export(model,
             'model/testmodel.onnx',
             input_names = ['Slice IMGs', 'Cluster info', 'Slice info'],   # the model's input names
             output_names = ['output'],)
-# %%

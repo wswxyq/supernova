@@ -8,7 +8,7 @@ class ClassifierModel(nn.Module):
     Slice(numSlice*4, 50, 50)   ->  CNN  ->  Flatten        ->  Linear
     Other Slice information(numSlice*numSliceFeature, 1)    ->  Linear  
     '''
-    def __init__(self, numClusterFeature = 21, numSlice = 4, numSliceFeature = 20):
+    def __init__(self, numClusterFeature = 19, numSlice = 4, numSliceFeature = 20):
         super().__init__()
         self.Slice_CNNmodel = nn.Sequential(
                 nn.Conv2d(numSlice*4, 128, 2),

@@ -12,7 +12,7 @@ def gen_from_eventfile(eventfile:str):
     os.makedirs(savedir, exist_ok=True)
     myDataLoader.createDataSet(eventfile=os.path.join(eventfolder, eventfile), num_slices=numSlice, SaveDir=savedir, num_cluster=numCluster)
 
-gen_from_eventfile('1020.txt')
+# gen_from_eventfile('1020.txt')
 # %%
 import multiprocessing as mp
 

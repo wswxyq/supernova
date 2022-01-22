@@ -7,4 +7,5 @@
 **xz
 *.onnx
 output/**
+event2
 # pth files contains pytorch models
