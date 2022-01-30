@@ -70,6 +70,10 @@ net=testmodel.ClassifierModel(numClusterFeature = 19, numSlice = 4, numSliceFeat
 import torch.optim as optim
 import torch.nn as nn
 criterion = nn.CrossEntropyLoss()
+
+# Increasing the learning rate helps some models learn faster, so that may be worth trying
+# Also, a learning rate schedule, or using an optimizer with a built in learning rate schedule (e.g. Adagrad)
+# may be beneficial to helping the model learn.
 optimizer = optim.Adam(net.parameters(), lr=0.01)
 # %%
 sum(p.numel() for p in net.parameters())
