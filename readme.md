@@ -1,4 +1,4 @@
-## This is the code of DSMMA project: supernova neutrino event classifier for NOvA experiment.
+## DSMMA project: supernova neutrino event classifier for NOvA experiment.
 
 
 ### splitdata.py
